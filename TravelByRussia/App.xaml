@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:TravelByRussia"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="20,0"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

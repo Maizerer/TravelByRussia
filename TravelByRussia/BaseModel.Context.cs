@@ -12,7 +12,7 @@ namespace TravelByRussia
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class TourFirmEntities : DbContext
     {
         public static TourFirmEntities _context;
@@ -28,12 +28,12 @@ namespace TravelByRussia
             }
             return _context;
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Hotel> Hotels { get; set; }
         public virtual DbSet<HotelComment> HotelComments { get; set; }

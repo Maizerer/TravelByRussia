@@ -24,7 +24,9 @@ namespace TravelByRussia
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new Hotels());
+            Manager.fraim = MainFrame;
+            MainFrame.Navigate(new IntroPage());
+            this.DataContext = new { Title = Manager.fraimTitle };
         }
         private void importTours()
         {
@@ -64,5 +66,47 @@ namespace TravelByRussia
                 TourFirmEntities.GetContext().SaveChanges();
             }
         }
+
+        private void MainFrame_ContentRendered(object sender, EventArgs e)
+        {
+            this.DataContext = new { Title = Manager.fraimTitle };
+            if (MainFrame.CanGoBack)
+            {
+                GoBack.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Manager.fraimTitle = "Главная страница";
+                this.DataContext = new { Title = Manager.fraimTitle };
+                GoBack.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            string temp = Manager.lastTitle;
+            Manager.lastTitle = Manager.fraimTitle;
+            Manager.fraimTitle = temp;
+            this.DataContext = new { Title = Manager.fraimTitle };
+            MainFrame.GoBack();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.lastTitle = Manager.fraimTitle;
+            MainFrame.Navigate(new Hotels());
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Manager.lastTitle = Manager.fraimTitle;
+            MainFrame.Navigate(new AddEditHotel("Добавление отеля", null));
+        }
+
     }
 }

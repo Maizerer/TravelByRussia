@@ -9,6 +9,8 @@ namespace TravelByRussia
 {
     public static class Manager
     {
+        public static string lastTitle;
         public static Frame fraim;
+        public static string fraimTitle;
     }
 }
