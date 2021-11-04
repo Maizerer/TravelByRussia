@@ -99,7 +99,8 @@ namespace TravelByRussia
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            Manager.lastTitle = Manager.fraimTitle;
+            MainFrame.Navigate(new ToursPage());
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

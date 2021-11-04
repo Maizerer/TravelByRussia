@@ -20,7 +20,21 @@ namespace TravelByRussia
             this.Hotels = new HashSet<Hotel>();
             this.Types = new HashSet<Type>();
         }
-    
+        
+        public string ActualText
+        {
+            get
+            {
+                return (IsActual) ? "Актуален" : "Не актуален";
+            }
+        }
+        public string ActualColor
+        {
+            get
+            {
+                return(IsActual) ? "Green" : "Red";
+            }
+        }
         public int Id { get; set; }
         public int TicketCount { get; set; }
         public string Name { get; set; }
