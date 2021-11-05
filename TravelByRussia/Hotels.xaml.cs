@@ -20,21 +20,38 @@ namespace TravelByRussia
     /// </summary>
     public partial class Hotels : Page
     {
+        /// <summary>
+        /// Инициализация
+        /// Добавление отелеий из БД в DataGrid
+        /// Установка заголовка фрейму
+        /// </summary>
         public Hotels()
         {
             InitializeComponent();
             hotelGrid.ItemsSource = TourFirmEntities.GetContext().Hotels.ToList();
             Manager.fraimTitle = "Список доступных отелей";
         }
+        /// <summary>
+        /// Функция обновления отелей
+        /// </summary>
         private void RefreshHotels()
         {
             hotelGrid.ItemsSource = TourFirmEntities.GetContext().Hotels.ToList();
         }
+        /// <summary>
+        /// Открывает страницу редактирования отеля
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void editBtn_Click(object sender, RoutedEventArgs e)
         {
             Manager.fraim.Navigate(new AddEditHotel("Редактирование отеля", (sender as Button).DataContext as Hotel));
         }
-
+        /// <summary>
+        /// Функция удаления отеля, перед тем как удалить спрашивает выбор пользователя
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
             Hotel selectedHotel = (sender as Button).DataContext as Hotel;

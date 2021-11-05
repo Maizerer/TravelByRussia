@@ -21,6 +21,9 @@ namespace TravelByRussia
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Инициализация и направление на Главную страницу
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -28,45 +31,12 @@ namespace TravelByRussia
             MainFrame.Navigate(new IntroPage());
             this.DataContext = new { Title = Manager.fraimTitle };
         }
-        private void importTours()
-        {
-            var fileData = File.ReadAllLines(@"C:\Users\maize\Desktop\ДЭ\import\Туры.txt");
-
-            var images = Directory.GetFiles(@"C:\Users\maize\Desktop\ДЭ\import\Туры фото");
-
-            foreach (var line in fileData)
-            {
-                var data = line.Split('\t');
-
-                Tour newTour = new Tour
-                {
-                    Name = data[0],
-                    TicketCount = int.Parse(data[2]),
-                    Price = int.Parse(data[3]),
-                    IsActual = (int.Parse(data[4]) == 1) ? true : false
-                };
-
-                foreach (var tourType in data[5].Split(new String[] { ", " }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var currentType = TourFirmEntities.GetContext().Types.ToList().FirstOrDefault(p => p.Name == tourType);
-
-                    if(currentType != null)
-                    {
-                        newTour.Types.Add(currentType);
-                    }
-                }
-                try
-                {
-                    newTour.ImagePreview = File.ReadAllBytes(images.FirstOrDefault(p => p.Contains(newTour.Name)));
-                }catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                TourFirmEntities.GetContext().Tours.Add(newTour);
-                TourFirmEntities.GetContext().SaveChanges();
-            }
-        }
-
+        /// <summary>
+        /// Событие Рендера контента в Фрейме
+        /// Кнопка назад появлется, если навигация фрейма может идти назад
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainFrame_ContentRendered(object sender, EventArgs e)
         {
             this.DataContext = new { Title = Manager.fraimTitle };
@@ -81,7 +51,11 @@ namespace TravelByRussia
                 GoBack.Visibility = Visibility.Hidden;
             }
         }
-
+        /// <summary>
+        /// По нажатию на кнопку назад возвращаемся на предыдующую страницу и изменяем заголовок фрейма
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoBack_Click(object sender, RoutedEventArgs e)
         {
             string temp = Manager.lastTitle;
@@ -90,19 +64,32 @@ namespace TravelByRussia
             this.DataContext = new { Title = Manager.fraimTitle };
             MainFrame.GoBack();
         }
-
+        /// <summary>
+        ///  Переход к странице "Список отелей"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Manager.lastTitle = Manager.fraimTitle;
             MainFrame.Navigate(new Hotels());
+            
         }
-
+        /// <summary>
+        /// Переход к странице "Список Туров"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Manager.lastTitle = Manager.fraimTitle;
             MainFrame.Navigate(new ToursPage());
         }
-
+        /// <summary>
+        /// Переход к старнице "Добавление отеля"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             Manager.lastTitle = Manager.fraimTitle;

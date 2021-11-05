@@ -21,6 +21,13 @@ namespace TravelByRussia
     public partial class AddEditHotel : Page
     {
         private Hotel _currentHotel = new Hotel();
+        /// <summary>
+        /// Если в параметр передан отель, то он добавляется в контекст данных
+        /// и поля формы заполняются
+        /// В комбобокс выбора страны загружаются страны из БД
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="hotel"></param>
         public AddEditHotel(string title, Hotel hotel)
         {
             InitializeComponent();
@@ -32,7 +39,12 @@ namespace TravelByRussia
             Manager.fraimTitle = title;
             countryCombo.ItemsSource = TourFirmEntities.GetContext().Countries.ToList();
         }
-
+        /// <summary>
+        /// Валидация введеных данных с формы
+        /// и реадктирование или создание отеля
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
@@ -68,7 +80,11 @@ namespace TravelByRussia
                 MessageBox.Show(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Запрет ввода букв и других символов в текстбокс
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = "0123456789".IndexOf(e.Text) < 0;
